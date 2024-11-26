@@ -1,18 +1,24 @@
-# Smart Contract Project - Solidity Project with Error Handling
+# Smart Contract Project - Library Management Smart Contract with Error Handling
 
-This smart contract demonstrates basic error-handling mechanisms in Solidity: require, assert, and revert. It allows users to deposit, withdraw, and reset Ether balances, with each function using error handling for validation.
+This smart contract demonstrates basic error-handling mechanisms in Solidity, including require, assert, and revert. It allows users to interact with a library system by adding, borrowing, returning, and checking books. Each function uses error handling to ensure the contract behaves correctly.
 
 ## Description
 
-The Project is a simple Ethereum smart contract that allows users to interact with Ether. It has three key functions:
+This project is a simple Ethereum smart contract designed to manage a library system. The contract allows users to:
 
-* Deposit: Allows users to deposit Ether into the contract.
+* Add a Book: Allows the owner to add books to the library.
+* Borrow a Book: Allows users to borrow books if available.
+* Return a Book: Allows users to return books they’ve borrowed.
+* Check Book Availability: Lets users check if a book is available for borrowing.
+* View Borrowed Books: Displays a list of books a user has borrowed.
+* Reset Library: Resets the library system, but only if no books are borrowed.
 
-* Withdraw: Allows users to withdraw Ether from the contract while checking for sufficient balance.
+The contract uses the following error-handling mechanisms:
 
-* Reset Balance: Allows users to reset the contract's balance to zero, with protections to prevent resetting when the balance is already zero.
-
-Each of these functions utilizes different Solidity error-handling mechanisms to ensure the contract behaves as expected. The contract is built to be tested on Remix IDE and demonstrates basic practices for developing secure smart contracts.
+* require: Ensures preconditions are met before executing functions.
+* assert: Used to validate internal contract states.
+* revert: Cancels a transaction and reverts any changes if conditions are not met.
+The contract is intended to be tested on Remix IDE and demonstrates secure smart contract development practices.
 
 
 ## Getting Started
@@ -45,18 +51,30 @@ Each of these functions utilizes different Solidity error-handling mechanisms to
 3. Interact with the Contract:
 
 * After deployment, you’ll see the contract listed under Deployed Contracts.
-* Expand the contract to interact with the functions (Deposit, Withdraw, ResetBalance, and CheckBalance).
+* Expand the contract to interact with the functions (Add Book, Borrow Book, Return Book, Check Availability, View Borrowed Books, and Reset Library).
 
 # Example of Interactions:
-* Deposit: Call the deposit() function, enter a value in Wei (e.g., 1000000000000000000 Wei for 1 Ether), and hit Transact.
-* Withdraw: Call the withdraw() function, enter an amount (in Wei) to withdraw, and hit Transact. Ensure there’s enough balance.
-* ResetBalance: Call the resetBalance() function to reset the balance to zero. If the balance is already zero, the function will fail with an error message.
+* Add a Book: Call the addBook() function, enter a book title, and hit Transact.
+* Borrow a Book: Call the borrowBook() function, enter the bookId, and hit Transact. Ensure the book is available.
+* Return a Book: Call the returnBook() function, enter the bookId, and hit Transact.
+* Check Availability: Call the checkBookAvailability() function to check if a specific book is available for borrowing.
+* View Borrowed Books: Call the viewBorrowedBooks() function to see a list of borrowed books.
+* Reset Library: Call the resetLibrary() function to reset the library. If books are borrowed, the function will revert with an error.
 
 # Testing and Debugging
 
-* Revert Errors: If the contract fails, check for revert errors such as "Balance is already zero. Cannot reset an empty balance." or "Insufficient balance to withdraw the requested amount."
-* Assertion Failures: If you encounter an error related to assert, it means there’s an issue with contract consistency (e.g., the balance became negative).
-* Require Failures: Look out for require errors like "You must send a positive amount of Ether.", which indicate that the transaction did not meet precondition checks
+* Revert Errors: If the contract fails, check for revert errors such as:
+
+* "This book is not available for borrowing." (when attempting to borrow an unavailable book).
+* "You haven't borrowed this book." (when attempting to return a book not borrowed).
+* "Books are currently borrowed, cannot reset the library." (when trying to reset the library with borrowed books).
+
+* Assertion Failures: If you encounter an error related to assert, it means there’s a problem with contract consistency (e.g., a book’s title is empty, or the total number of books doesn’t match the expected value).
+
+* Require Failures: Look out for require errors like:
+
+* "This book is not available for borrowing." (in borrowBook()).
+* "You haven't borrowed this book." (in returnBook()).
 
 ## Help
 
@@ -64,8 +82,8 @@ If you encounter issues while running the contract, you can check the Remix IDE 
 
 For common troubleshooting, check the following:
 
-* Ensure that you're using the correct Wei values for Ether (1 Ether = 1000000000000000000 Wei).
-* If you see an assertion failure, double-check that the contract’s balance is not negative.
+* Ensure that you're using valid book IDs.
+* If you see an assertion failure, verify that book titles are correctly added and the total count is correct.
 * Use the Remix console to view logs for failed transactions and contract errors.
 
 # Authors
